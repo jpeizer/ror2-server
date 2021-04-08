@@ -18,24 +18,29 @@ ENV R2_SV_PORT 27015
 ENV R2_QUERY_PORT 27016
 
 # Prepare the environment
-# We need Wine 3 and xvfb
+# We need Wine 6 and xvfb
 RUN set -x \
-	&& dpkg --add-architecture i386 \
+#	&& dpkg --add-architecture i386 \
 	&& apt-get update \
 	&& apt-get install -y --no-install-recommends --no-install-suggests \
+	    ca-certificates \
 		wget \
 		gnupg2 \
 		xauth \
 		gettext \
 		winbind \
-	&& wget -nc https://dl.winehq.org/wine-builds/winehq.key \
+	&& wget -nc http://dl.winehq.org/wine-builds/winehq.key \
 	&& apt-key add winehq.key \
-	&& echo "deb https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/Debian_10 ./" >> /etc/apt/sources.list \
+	&& echo "deb https://dl.winehq.org/wine-builds/debian/ buster main" >> /etc/apt/sources.list \
 	&& apt-key adv --keyserver keyserver.ubuntu.com --recv-keys DFA175A75104960E \
 	&& apt-get update \
+	&& wget -nc https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/Debian_10/Release.key \
+	&& echo "deb https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/Debian_10 ./" >> /etc/apt/sources.list \
+    && apt-get update \
 	&& apt-get install -y --no-install-recommends --no-install-suggests \
 		xvfb \
 		lib32gcc1 \
+		libfaudio0 \
 	&& apt-get install -y --no-install-recommends --no-install-suggests \
 		wine-stable \
 	&& mkdir -p ${STEAMAPPDIR} \
