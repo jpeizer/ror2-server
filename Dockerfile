@@ -29,7 +29,7 @@ RUN set -x \
 		xauth \
 		gettext \
 		winbind \
-	&& wget -nc http://dl.winehq.org/wine-builds/winehq.key \
+	&& wget -nc https://dl.winehq.org/wine-builds/winehq.key \
 	&& apt-key add winehq.key \
 	&& echo "deb https://dl.winehq.org/wine-builds/debian/ buster main" >> /etc/apt/sources.list \
 	&& apt-key adv --keyserver keyserver.ubuntu.com --recv-keys DFA175A75104960E \
